@@ -11,16 +11,16 @@ export default class View extends React.Component {
 
 		switch(acviteView) {
 			case 'welcome':
-				template = <WelcomeView />;
+				template = <WelcomeView {...this.props} />;
 				break;
 			case 'edit':
-				template = <EditView />;
+				template = <EditView {...this.props} />;
 				break;
 			case 'theame':
-				template = <TheameView />;
+				template = <TheameView {...this.props} />;
 				break;
 			case 'preview':
-				template = <PreviewView />;
+				template = <PreviewView {...this.props} />;
 				break;
 		}
 

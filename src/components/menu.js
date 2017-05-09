@@ -5,7 +5,9 @@ import Dropdown from './common/dropdown';
 export default class Menu extends React.Component {
 	render() {
 		return (
-			<div {...this.props}></div>
+			<div>
+				<Button onClick={this.props.doBackup}>Save</Button>
+			</div>
 		);
 	}
 }

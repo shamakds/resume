@@ -4,9 +4,9 @@ import Button from './common/button';
 export default class Navigation extends React.Component {
 	render() {
 		return (
-			<div {...this.props}>
-				<Button onClick={this.props.onChange('prev')}>Go Back</Button>
-				<Button onClick={this.props.onChange('next')}>Go Next</Button>
+			<div>
+				<Button onClick={this.props.switchView.bind(this, 'goBack')}>Go Back</Button>
+				<Button onClick={this.props.switchView.bind(this, 'goNext')}>Go Next</Button>
 			</div>
 		);
 	}

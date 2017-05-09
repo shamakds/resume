@@ -7,10 +7,9 @@ export default class EditView extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			groups: []
+			groups: this.props.data || []
 		};
 	};
-
 	addGroup() {
 		let groups = this.state.groups;
 		groups.push({
@@ -21,16 +20,9 @@ export default class EditView extends React.Component {
 			groups: groups
 		});
 	};
-	addSkill(groupIndex, projectIndex) {
-		if(Number(groupIndex) == NaN || Number(projectIndex) == NaN) {
-			return;
-		}
+	removeGroup(groupIndex) {
 		let groups = this.state.groups,
-			group = groups[groupIndex];
-
-		group.items[projectIndex].skills.push({
-			name: 'SKILL'
-		});
+			group = groups.splice(groupIndex, 1);
 
 		this.setState({
 			groups: groups
@@ -52,7 +44,51 @@ export default class EditView extends React.Component {
 			groups: groups
 		});
 	};
+	setProjectData(groupIndex, projectIndex, value, key) {
+		let groups = this.state.groups,
+			group = groups[groupIndex],
+			project = group.items[projectIndex];
 
+		project[key] = value;
+
+		this.setState({
+			groups: groups
+		});
+	};
+	removeProject(groupIndex, projectIndex) {
+		let groups = this.state.groups,
+			group = groups[groupIndex],
+			project = group.items.splice(projectIndex, 1);
+
+		this.setState({
+			groups: groups
+		});	
+	};
+	addSkill(groupIndex, projectIndex) {
+		if(Number(groupIndex) == NaN || Number(projectIndex) == NaN) {
+			return;
+		}
+		let groups = this.state.groups,
+			group = groups[groupIndex];
+
+		group.items[projectIndex].skills.push({
+			name: 'SKILL'
+		});
+
+		this.setState({
+			groups: groups
+		});	
+	};
+	removeSkill(groupIndex, projectIndex, skillIndex) {
+		let groups = this.state.groups,
+			group = groups[groupIndex],
+			project = group.items[projectIndex],
+			skill = project.skills.splice(skillIndex, 1);
+
+		this.setState({
+			groups: groups
+		});
+	};
 	render() {
 		return (
 			<div>
@@ -65,14 +101,23 @@ export default class EditView extends React.Component {
 							<div key={'company'+groupIndex}>
 								<h4>Company {groupIndex}</h4>
 								<div>
+									<Button onClick={this.removeGroup.bind(this, groupIndex)}>Remove Group</Button>
 									<Button onClick={this.addProject.bind(this, groupIndex)}>Add Project</Button>
 								</div>
 								{(group.items || []).map( (project, projectIndex) => (
 									<div key={'project'+projectIndex}>
+										<input onChange={ (event) => this.setProjectData(groupIndex, projectIndex, event.target.value, 'name') } 
+											value={ project.name } placeholder="Project name" />
+										<Button onClick={this.removeProject.bind(this, groupIndex, projectIndex)}>Remove Project</Button>
 										<Button onClick={this.addSkill.bind(this, groupIndex, projectIndex)}>Add Skill</Button>
-										<TextArea placeholder="Input your data" value="initial text" />
-
-										<div>{(project.skills || []).map( (skill, i) => <span key={i}>{skill.name}</span> )}</div>
+										<div>{(project.skills || []).map( (skill, skillIndex) => (
+											<span key={skillIndex}>
+												{skill.name}
+												<span onClick={this.removeSkill.bind(this, groupIndex, projectIndex, skillIndex)}> (remove)</span>
+											</span>
+										) )}</div>
+										<TextArea onChange={ (event) => this.setProjectData(groupIndex, projectIndex, event.target.value, 'info') }
+											value={project.info} />
 									</div>
 								) )}
 							</div>
