@@ -13,16 +13,16 @@ var webpack = require('webpack'),
 			filename: 'bundle.js'
 		},
 		resolve: {
-			extensions: ['*', '.js']
+			extensions: ['.js']
 		},
 		module: {
 			loaders: [
 				{
-					test: /'.jsx?$/,
+					test: /\.jsx?$/,
 					exclude: /node_modules/,
 					loader: [
-						'react-hot', 
-						'babel?presets[]=react,presets[]=es2015'
+						'react-hot-loader', 
+						'babel-loader?presets[]=react,presets[]=es2015'
 					]
 				}
 			]
