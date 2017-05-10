@@ -6,10 +6,10 @@ import PreviewView from './PreviewView';
 
 export default class View extends React.Component {
 	getActiveViewComponent() {
-		let acviteView = this.props.activeView,
+		let activeView = this.props.activeView,
 			template;
 
-		switch(acviteView) {
+		switch(activeView) {
 			case 'welcome':
 				template = <WelcomeView {...this.props} />;
 				break;

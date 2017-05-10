@@ -37,9 +37,9 @@ export default class App extends React.Component {
 					data: name
 				});
 			},
-			setData: (data) => {
+			update: (data) => {
 				dispatcher.dispatch({
-					type: 'data',
+					type: 'update',
 					data: data
 				});
 			},
@@ -68,7 +68,7 @@ export default class App extends React.Component {
     			case 'navigateTo':
 	    			this.navigateTo(dispatch.data);
 	    			break;
-    			case 'data':
+    			case 'update':
     				this.setData(dispatch.data);
 	    			break;
     			case 'backup':
@@ -141,7 +141,7 @@ export default class App extends React.Component {
 			<div className="r--wrap">
 				<Menu doBackup={ this.handlers.doBackup } navigateTo={ this.handlers.navigateTo } />
 				<Navigation switchView={ this.handlers.switchView } />
-				<View data={this.data} setData={ this.handlers.setData } navigateTo={ this.handlers.navigateTo } activeView={this.getActiveViewName()} />
+				<View data={this.data} update={ this.handlers.update.bind(this) } navigateTo={ this.handlers.navigateTo } activeView={this.getActiveViewName()} />
 			</div>
 		);
 	};
