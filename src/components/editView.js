@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'underscore';
 import Button from './common/button';
 import Form from './common/form';
 import TextArea from './common/textarea';
@@ -6,14 +7,14 @@ import TextArea from './common/textarea';
 class Company extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = this.props.data || {
-			name: '',
-			items: []
-		};
+		this.state = _.extend({
+            name: '',
+            items: []
+        }, this.props.data);
 	};
 	setData(value, key) {
 		this.state[key] = value;
-		this.update(this.state);
+        this.setState(this.state);
 	};
 	addItem() {
 		this.state.items.push({
@@ -22,22 +23,27 @@ class Company extends React.Component {
 			items: [],
 			date: {}
 		});
-        this.update(this.state);
+        this.setState(this.state);
 	};
 	updateItem(index, data) {
 		this.state.items[index] = data;
-        this.update(this.state);
+        this.setState(this.state);
 	};
 	removeItem(index) {
 		this.state.items.splice(index, 1);
-        this.update(this.state);
+        this.setState(this.state);
 	};
     update(data) {
         this.props.update && this.props.update(data);
     };
+    onSubmit(event) {
+        event.preventDefault();
+        this.update(this.state);
+    };
 	render() {
 		return (
-			<div>
+			<div><form onSubmit={ this.onSubmit.bind(this) }>
+                <Button type="submit">Save</Button>
 				<input onChange={ (event) => this.setData(event.target.value, 'name') } value={ this.state.name } placeholder="Project name" />
 				<div>
 					<Button onClick={ this.props.remove }>Remove Group</Button>
@@ -48,16 +54,16 @@ class Company extends React.Component {
 							 update={ this.updateItem.bind(this, index) }
 							 remove={ this.removeItem.bind(this, index) } />
 				) )}
-			</div>
+            </form></div>
 		)
 	}
 }
 class Project extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = this.props.data || {
-		    items: []
-        };
+		this.state = _.extend({
+            items: []
+        }, this.props.data);
 	};
 	setData(value, key) {
 		this.state[key] = value;

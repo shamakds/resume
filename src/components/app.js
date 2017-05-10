@@ -42,11 +42,6 @@ export default class App extends React.Component {
 					type: 'update',
 					data: data
 				});
-			},
-			doBackup: () => {
-				dispatcher.dispatch({
-					type: 'backup'
-				});
 			}
 		};
 	};
@@ -71,9 +66,6 @@ export default class App extends React.Component {
     			case 'update':
     				this.setData(dispatch.data);
 	    			break;
-    			case 'backup':
-    				this.doBackup();
-	    			break;
 	    	}
 	    });
 	};
@@ -90,6 +82,7 @@ export default class App extends React.Component {
 	};
 	setData(data) {
 		this.data = data || [];
+        this.doBackup();
 	};
 	switchView(dir) { 
 		let _dir, index,
@@ -139,7 +132,6 @@ export default class App extends React.Component {
 	render() {
 		return (
 			<div className="r--wrap">
-				<Menu doBackup={ this.handlers.doBackup } navigateTo={ this.handlers.navigateTo } />
 				<Navigation switchView={ this.handlers.switchView } />
 				<View data={this.data} update={ this.handlers.update.bind(this) } navigateTo={ this.handlers.navigateTo } activeView={this.getActiveViewName()} />
 			</div>
