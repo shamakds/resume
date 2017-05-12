@@ -1,7 +1,6 @@
 import React from 'react';
 import WelcomeView from './WelcomeView';
 import EditView from './editView';
-import TheameView from './TheameView';
 import PreviewView from './PreviewView';
 
 export default class View extends React.Component {
@@ -15,9 +14,6 @@ export default class View extends React.Component {
 				break;
 			case 'edit':
 				template = <EditView {...this.props} />;
-				break;
-			case 'theame':
-				template = <TheameView {...this.props} />;
 				break;
 			case 'preview':
 				template = <PreviewView {...this.props} />;

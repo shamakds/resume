@@ -11,8 +11,6 @@ const ViewMap = [{
 	  }, {
 	  	name: 'edit'
 	  }, {
-	  	name: 'theame'
-	  }, {
 	  	name: 'preview'
 	  }];
 const BackupKey = "RESUME_BACKUP";
